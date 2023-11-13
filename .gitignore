@@ -1,0 +1,14 @@
+node_modules
+config.js
+config.json
+db.js
+db.json
+Data
+Items
+Maps
+Monsters
+Sprites
+World
+input
+output
+__pycache__

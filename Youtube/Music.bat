@@ -1,0 +1,1 @@
+C:\Apps\yt-dlp.exe -ciw -4 --prefer-ffmpeg --cookies C:\Scripts\Youtube\Cookies.txt -o "C:\Media\Music\\%(title)s %(id)s.%(ext)s" -f bestaudio[acodec=opus]/bestaudio[ext=opus]/bestaudio -x --audio-format m4a --audio-quality 0 --embed-thumbnail $1
