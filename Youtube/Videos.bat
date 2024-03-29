@@ -1,1 +1,1 @@
-C:\Apps\yt-dlp.exe -ciw -4 --prefer-ffmpeg --cookies C:\Scripts\Youtube\Cookies.txt --embed-thumbnail -o "C:\Media\Downloaded\%(title)s-%(upload_date)s %(id)s.%(ext)s" -f bv+ba/b --recode mp4 --embed-thumbnail -a C:\Scripts\Youtube\Video.txt
+C:\Apps\yt-dlp.exe -ciw -4 --prefer-ffmpeg --cookies C:\Scripts\Youtube\Cookies.txt --embed-thumbnail --write-sub --embed-subs -o "C:\Media\Downloaded\%(title)s-%(upload_date)s %(id)s.%(ext)s" -f bv+ba/b -a C:\Scripts\Youtube\Video.txt

@@ -60,8 +60,8 @@ async function fetchData(year) {
   }
 }
 async function mergeFiles() {
-  const startYear = 2012;
-  const endYear = 2040;
+  const startYear = 2024;
+  const endYear = 2025;
   const outputFile = 'AlmanaxYears.json';
   let allYearsData = new Map();
   for (let year = startYear; year <= endYear; year++) {
@@ -109,8 +109,8 @@ async function mergeFiles() {
 }
 
 async function fetchAllYears() {
-  const startYear = 2012;
-  const endYear = 2040;
+  const startYear = 2024;
+  const endYear = 2025;
   for (let year = startYear; year <= endYear; year++) {
     await fetchData(year);
   }
