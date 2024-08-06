@@ -1,12 +1,15 @@
+const fetch = require('request-promise')
 const fs = require('fs')
 const https = require('https')
+const key = ''
+const link = ''
 
 async function fetchWithRetries(url) {
   let retries = 0
   while (retries < 5) {
     try {
       await delay(6000)
-      const response = await fetch(url)
+      const response = await fetch({ url: url, headers: { Accept: '*/*', 'Accept-Language': 'en-US,en;q=0.9,lt;q=0.8', Authorization: key, Connection: 'close', 'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.42' } })
       return response
     } catch (err) {
       if (err.statusCode === 429) {
@@ -24,23 +27,23 @@ async function fetchWithRetries(url) {
 
 async function downloadFiles() {
   try {
-    const res = await fetchWithRetries('https://discord.com/api/v9/guilds/746293333218951241/messages/search?channel_id=753685966425686067&author_id=78600305175961600&has=file&include_nsfw=true&offset=100')
+    const res = await fetchWithRetries(link)
     for (const m of JSON.parse(res).messages) {
       if (m[0].attachments.length > 0) {
         for (const a of m[0].attachments) {
           await delay(1500)
-          const fileStream = fs.createWriteStream(`dl/${a.filename}`)
+          const fileStream = fs.createWriteStream(`Downloaded/${a.filename}`)
           await new Promise((resolve, reject) => {
             https.get(a.url, response => {
               response.pipe(fileStream)
               fileStream.on('finish', () => {
                 fileStream.close()
-                console.log('File downloaded successfully.')
+                console.log('File downloaded successfully')
                 resolve()
               })
             }).on('error', err => {
-              fs.unlinkSync(`dl/${a.filename}`)
-              console.error('Error downloading file:', err)
+              fs.unlinkSync(`Downloaded/${a.filename}`)
+              console.error('Error downloading file: ', err)
               reject(err)
             });
           });
@@ -49,7 +52,7 @@ async function downloadFiles() {
     }
     console.log('+')
   } catch (error) {
-    console.error('Error fetching messages:', error)
+    console.error('Error fetching messages: ', error)
   }
 }
 

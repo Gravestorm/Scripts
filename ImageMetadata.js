@@ -1,16 +1,17 @@
+// Add/modify date metadata of images based on the file name
+
 const fs = require('fs')
 const { exec } = require('child_process')
 const path = require('path')
 const os = require('os')
+const directory = ''
 
-// Function to extract date and time from filename
 function extractDateTime(filename) {
   const parts = filename.split('_')
   if (parts.length < 3) {
     console.error(`Invalid filename format: ${filename}`)
     return null
   }
-
   const dateString = parts[1]
   const timeString = parts[2].split('.')[0] // Remove file extension
   const year = dateString.slice(0, 4)
@@ -20,11 +21,9 @@ function extractDateTime(filename) {
   const minute = timeString.slice(2, 4)
   const second = timeString.slice(4, 6)
 
-  // Construct Date object with UTC time
   return new Date(Date.UTC(year, month - 1, day, hour, minute, second))
 }
 
-// Function to modify metadata of an image file
 function modifyMetadata(filepath, datetime) {
   return new Promise((resolve, reject) => {
     const command = `exiftool -overwrite_original -DateTimeOriginal="${datetime.toISOString()}" -CreateDate="${datetime.toISOString()}" "${filepath}"`
@@ -38,7 +37,6 @@ function modifyMetadata(filepath, datetime) {
   })
 }
 
-// Function to update file's modification time
 function updateFileModificationTime(filepath, datetime) {
   fs.utimes(filepath, datetime, datetime, (err) => {
     if (err) {
@@ -52,7 +50,6 @@ function updateFileModificationTime(filepath, datetime) {
   })
 }
 
-// Function to update file's creation time by copying the file
 function updateFileCreationTime(filepath, tempFilePath, datetime) {
   fs.copyFile(filepath, tempFilePath, (err) => {
     if (err) {
@@ -78,7 +75,6 @@ function updateFileCreationTime(filepath, tempFilePath, datetime) {
   })
 }
 
-// Function to process all files in a directory
 async function processFiles(directory) {
   try {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'image-metadata-'))
@@ -102,6 +98,4 @@ async function processFiles(directory) {
   }
 }
 
-// Usage: Call processFiles with the directory containing the images
-const directory = 'C:\\Users\\PC\\Downloads\\ff'
 processFiles(directory)

@@ -1,32 +1,26 @@
-const fs = require('fs');
+// Filter and move text lines from inputFile into outputFile with specific regex extensions
 
-const inputFile = 'input.txt';
-const outputFile = 'output.txt';
+const fs = require('fs')
+const inputFile = 'input.txt'
+const outputFile = 'output.txt'
 
 fs.readFile(inputFile, 'utf8', (err, data) => {
   if (err) {
-    console.error(err);
-    return;
+    throw console.error(err)
   }
-  const regex = /(https?:\/\/[^\s]+(\.jpg|\.jpeg|\.png))/gi;
-  const links = data.match(regex);
-
-  fs.writeFile(outputFile, links.join('\n'), err => {
+  const regex = /(https?:\/\/[^\s]+(\.jpg|\.jpeg|\.png))/gi
+  const links = data.match(regex)
+  fs.writeFile(outputFile, links.join('\n'), (err) => {
     if (err) {
-      console.error(err);
-      return;
+      throw console.error(err)
     }
-
-    console.log('Filtered links copied to output');
-
-    const filteredData = data.replace(regex, '');
-    fs.writeFile(inputFile, filteredData, err => {
+    console.log('Filtered links copied to output')
+    const filteredData = data.replace(regex, '')
+    fs.writeFile(inputFile, filteredData, (err) => {
       if (err) {
-        console.error(err);
-        return;
+        throw console.error(err)
       }
-
-      console.log('Filtered links removed from input');
-    });
-  });
-});
+      console.log('Filtered links removed from input')
+    })
+  })
+})
