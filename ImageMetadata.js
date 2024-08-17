@@ -4,7 +4,7 @@ const fs = require('fs')
 const { exec } = require('child_process')
 const path = require('path')
 const os = require('os')
-const directory = ''
+const directory = 'C:\\Media\\Images\\Camera'
 
 function extractDateTime(filename) {
   const parts = filename.split('_')
@@ -13,15 +13,16 @@ function extractDateTime(filename) {
     return null
   }
   const dateString = parts[1]
-  const timeString = parts[2].split('.')[0] // Remove file extension
+  const timeString = parts[2].split('.')[0]
   const year = dateString.slice(0, 4)
   const month = dateString.slice(4, 6)
   const day = dateString.slice(6, 8)
   const hour = timeString.slice(0, 2)
   const minute = timeString.slice(2, 4)
   const second = timeString.slice(4, 6)
-
-  return new Date(Date.UTC(year, month - 1, day, hour, minute, second))
+  let datetime = new Date(Date.UTC(year, month - 1, day, hour, minute, second))
+  if (filename.includes('_1.')) datetime.setSeconds(datetime.getSeconds() + 1)
+  return datetime
 }
 
 function modifyMetadata(filepath, datetime) {

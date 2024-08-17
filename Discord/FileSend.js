@@ -2,14 +2,15 @@ const { Client } = require('discord.js-selfbot-v13')
 const client = new Client()
 const fs = require('fs-extra')
 const path = require('path')
-const channelId = '1247988990729125950'
 const key = ''
-const inputFolder = 'C:\\Users\\PC\\Downloads\\BeforeSend'
-const outputFolder = 'C:\\Users\\PC\\Downloads\\AfterSend'
+const channelID = ''
+const inputFolder = 'C:\\BeforeSend'
+const outputFolder = 'C:\\AfterSend'
+fs.ensureDirSync(inputFolder)
 fs.ensureDirSync(outputFolder)
 
 client.once('ready', async () => {
-  const channel = await client.channels.fetch(channelId)
+  const channel = await client.channels.fetch(channelID)
   const sendVideos = async () => {
     const files = await fs.readdir(inputFolder)
     for (let i = 0; i < files.length; i += 10) {

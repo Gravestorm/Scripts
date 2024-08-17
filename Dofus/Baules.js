@@ -1,6 +1,6 @@
 const { Console } = require('console');
 const fs = require('fs')
-const data = JSON.parse(fs.readFileSync('./data.json'))
+const data = JSON.parse(fs.readFileSync('./Baules.json'))
 const obj = {
 	baules: [],
     users: []
